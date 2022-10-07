@@ -1,0 +1,46 @@
+classdef ModelRocket
+    %SIMPLEROCKET Summary of this class goes here
+    %   Detailed explanation goes here
+    
+    properties
+        %input data
+        motorName           %A string of a *.csv file of the thrust curve
+        motor               %Automatically instantiated motor object
+        mass                %mass in lb
+        diameter            %diameter in inches
+        coefficientOfDrag   %a ration
+
+        % simulation parameters
+        samplingFrequency = 100
+        
+        % computed data
+        flightPath
+        apogeeData
+    end
+    
+    methods
+        function obj = ModelRocket(motorName, mass, diameter, Cd)
+            %SIMPLEROCKET Construct an instance of this class
+            %   Detailed explanation goes here
+            obj.motorName = motorName;
+            obj.motor = Motor(obj.motorName);
+            obj.mass = mass;
+            obj.diameter = diameter*2.54/100;
+            obj.coefficientOfDrag = Cd;
+        end
+        
+        function [] = launch(obj)
+            %Performs simulation from burn out to coasting
+            %   define rocket's dry mass in kg
+            %   define rocket's diameter in m^2
+            %   define rocket's coefficient of drag
+            
+            
+            [obj.flightPath, obj.apogeeData] = simulateLaunch( ...
+                obj.motorObject,obj.samplingFrequency, obj.mass, obj.diameter, obj.coefficientOfDrag);
+        end
+
+
+    end
+end
+
