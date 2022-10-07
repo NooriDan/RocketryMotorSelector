@@ -11,11 +11,7 @@ classdef ModelRocket
         Cd                  %Coefficient Of Drag: a ration
 
         % simulation parameters
-        samplingFrequency = 120
-        
-        % computed data
-        flightPath
-        apogeeData
+        samplingFrequency = 100
     end
     
     methods

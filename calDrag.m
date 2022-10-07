@@ -7,15 +7,10 @@ function f = calDrag(velocity, diameter, Cd)
 
 A = pi*((diameter/2)^2);
 r = 1.225;
-speedOfSound = 331.5;
 
 %%%
 if velocity==0 
     f=0;
-
-elseif velocity <= 0.5*speedOfSound %drag in low speed 
-
-    f = -0.5*(velocity/abs(velocity))*Cd*r*A*(abs(velocity)^(1+(velocity/speedOfSound)));
 
 else  %drag in high speed
 
