@@ -7,7 +7,7 @@ function f = calDrag(velocity, diameter, Cd)
 
 A = pi*((diameter/2)^2);
 r = 1.225;
-
+speedOfSound = 331;
 %%%
 if velocity==0 
     f=0;

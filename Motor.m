@@ -12,7 +12,7 @@ classdef Motor
         totalImpulse;
 
         %Define Global Variables
-        samplingFrequency = 120;     %in Hz or num of point in a second
+        samplingFrequency = 200;     %in Hz or num of point in a second
     end
     
     methods

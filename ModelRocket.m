@@ -18,8 +18,8 @@ classdef ModelRocket
         function obj = ModelRocket(motorName, mass, diameter, coefficientOfDrag)
             %SIMPLEROCKET Construct an instance of this class
             obj.motorName = motorName;
-            obj.motor = Motor(obj.motorName);
-            obj.mass = mass/2.20462;            %conversion to kg
+            obj.motor = Motor(obj.motorName);   %motor object from motor Class
+            obj.mass = (mass/2.20462);           %conversion to kg
             obj.diameter = diameter*2.54/100;   %conversion to m
             obj.Cd = coefficientOfDrag;
         end

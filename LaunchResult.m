@@ -31,7 +31,7 @@ classdef LaunchResult
             obj.position = flightProfile(4, :);
             obj.drag= flightProfile(5, :);
 
-            obj.flags = [obj.maxAccel(); obj.maxVel(); obj.apogee()];
+            obj.flags = [obj.maxAccel(); obj.maxVel(); obj.apogee(); obj.maxDrag()];
 
 
 
@@ -54,6 +54,12 @@ classdef LaunchResult
             maxAccel = max(obj.acceleration);
             maxAccelTime = obj.time(obj.acceleration == maxAccel);
             outputArg = [maxAccelTime, round(maxAccel)];
+        end
+
+        function outputArg = maxDrag(obj)
+            maxDrag = max(obj.drag);
+            maxDragTime = obj.time(obj.drag == maxDrag);
+            outputArg = [maxDragTime, round(maxDrag)];
         end
 
 
@@ -89,29 +95,24 @@ classdef LaunchResult
 
         function visualize(obj)
             %plot the actual values
-            plot(obj.time,obj.acceleration,'r', ...
-                obj.time,obj.velocity,'b', ...
-                obj.time,obj.position,'g', ...
-                obj.time,obj.drag, 'c');
+            plot(obj.time,obj.acceleration/max(obj.acceleration),'r', ...
+                obj.time,obj.velocity/max(obj.velocity),'b', ...
+                obj.time,obj.position/max(obj.position),'g', ...
+                obj.time,obj.drag/max(abs(obj.drag)), 'c');
 
-            legend('acceleration', 'velocity','displacement', 'drag','Location','NorthWest');
+            legend('acceleration', 'velocity','altitude', 'drag','Location','SouthEast');
 
             grid on
             xlabel('Time in seconds'); ylabel('Flight Variables');
-            
+            ylim([-1.25, 1.25]);
             apogeeTime = obj.flags(3, 1);
-            apogee =     obj.flags(3, 2);
-
             maxVelTime = obj.flags(2, 1);
-            maxVel =     obj.flags(2, 2);
-
             maxAccelerationTime = obj.flags(1,1);
-            maxAcceleration =     obj.flags(1,2);
 
             %%marking important apogee data
-            text(apogeeTime, apogee, '\leftarrow Apogee point', 'FontName','times');
-            text(maxVelTime, maxVel, '\leftarrow max Velocity point', 'FontName','times');
-            text(maxAccelerationTime, maxAcceleration, '\leftarrow max Acceleration Time', 'FontName','times');
+            text(apogeeTime, 1, '\leftarrow Apogee point', 'FontName','times');
+            text(maxVelTime, 1, '\leftarrow max Velocity point', 'FontName','times');
+            text(maxAccelerationTime, 1, '\leftarrow max Acceleration Time', 'FontName','times');
             
             obj.generateReport();
             fprintf(['Data Plotted!\n' ...
@@ -129,12 +130,17 @@ classdef LaunchResult
             maxAccelerationTime = obj.flags(1,1);
             maxAcceleration =     obj.flags(1,2);
 
-            fprintf(['apogee= %d m after %d seconds;' ...
+            maxDragTime = obj.flags(4, 1);
+            maxDrag = obj.flags(4, 2);
+
+            fprintf(['\napogee= %d m after %d seconds;' ...
                 '\nmaxVelocity = %d m/s after %d seconds;' ...
-                '\nmaxAcceleration= %d after %d seconds\n'], ...
+                '\nmaxAcceleration= %d m/s^2 after %d seconds' ...
+                '\nmaxDrag= %d m/s^s after %d seconds\n\n'], ...
                 apogee, apogeeTime, ...
                 maxVel, maxVelTime, ...
-                maxAcceleration, maxAccelerationTime)
+                maxAcceleration, maxAccelerationTime, ...
+                maxDrag, maxDragTime)
         end
 
 
