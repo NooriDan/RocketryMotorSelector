@@ -3,6 +3,7 @@ classdef LaunchResult
     %   Detailed explanation goes here
     
     properties
+        test
         %Result Data (1Xn row vectors)  
         time
         acceleration
@@ -57,8 +58,8 @@ classdef LaunchResult
         end
 
         function outputArg = maxDrag(obj)
-            maxDrag = max(obj.drag);
-            maxDragTime = obj.time(obj.drag == maxDrag);
+            maxDrag = max(abs(obj.drag));
+            maxDragTime = obj.time(abs(obj.drag) == maxDrag);
             outputArg = [maxDragTime, round(maxDrag)];
         end
 
@@ -89,6 +90,18 @@ classdef LaunchResult
 
         function [] = graphBurnOut(obj)
 
+            condition = obj.time <= 1.5*obj.flags(2,1);
+
+            %plot the actual values
+            plot(obj.time(condition),obj.acceleration(condition),'r', ...
+                obj.time(condition),obj.velocity(condition),'b', ...
+                obj.time(condition),obj.position(condition),'g', ...
+                obj.time(condition),obj.drag(condition), 'c');
+            
+            ylim([-obj.flags(2,2), obj.flags(2,2)])
+            grid on
+           
+            legend('acceleration', 'velocity','altitude', 'drag','Location','northwest');
 
         end
 
@@ -136,7 +149,7 @@ classdef LaunchResult
             fprintf(['\napogee= %d m after %d seconds;' ...
                 '\nmaxVelocity = %d m/s after %d seconds;' ...
                 '\nmaxAcceleration= %d m/s^2 after %d seconds' ...
-                '\nmaxDrag= %d m/s^s after %d seconds\n\n'], ...
+                '\nmaxDrag= %d m/s^2 after %d seconds\n\n'], ...
                 apogee, apogeeTime, ...
                 maxVel, maxVelTime, ...
                 maxAcceleration, maxAccelerationTime, ...

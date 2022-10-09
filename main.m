@@ -2,6 +2,7 @@
 
 fprintf('\n******************************************')
 clear
+clc
 fprintf('\n Simulation began...\n')
 
 
@@ -15,13 +16,22 @@ fprintf('\n Simulation began...\n')
 % testResult = LaunchResult(testRocket);
 
 %Define Marauder I rocket
-mass2 = 66-12;                   %define rocket's dry mass in lb
-diameter2 = 6.17;            %define rocket's diameter in inch
-Cd2 = .75;                   %define rocket's coefficient of drag
-motorName2 = 'Cesaroni_10367N1800-P.csv';
+dryMass = 66-12;             %define rocket's dry mass in lb
+propellersMass = 12;
+diameter = 6.17;            %define rocket's diameter in inch
+Cd = .75;                   %define rocket's coefficient of drag
+motorName = 'Cesaroni_10367N1800-P.csv';
 
-mauraduerI = ModelRocket(motorName2, mass2, diameter2, Cd2);
-macResult = LaunchResult(mauraduerI);
+motor = Motor(motorName, propellersMass);
+airframe = Airframe(dryMass, diameter, Cd);
 
-display(mauraduerI)
+macRocket = ModelRocket(motor, airframe);
+macResult = LaunchResult(macRocket);
+
+clear dryMass propellersMass diameter Cd motorName
+
+display(macRocket)
 macResult.visualize
+
+
+fprintf('\n******************************************\n')
