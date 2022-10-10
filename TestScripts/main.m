@@ -32,9 +32,7 @@ clear dryMass propellersMass diameter Cd motorName
 
 display(macRocket)
 % macResult.visualize
-[newMethodVel, transform] = testCalBurnMotor(macRocket);
 
-plot(macResult.time(1, 1:414),newMethodVel, 'c',macResult.time(1, 1:414), transform/max(transform), 'r', macResult.time(1, 1:414), motor.thrust/max(motor.thrust), 'b')
 
 % plot(macResult.time(1, 1:414),macResult.velocity(1,1:414), 'b',macResult.time(1, 1:414), newMethodVel, 'r')
 
