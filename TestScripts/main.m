@@ -19,7 +19,7 @@ fprintf('\n Simulation began...\n')
 dryMass = 70.8- 12.625874;  %define rocket's dry mass in lb
 propellersMass = 12.625874;
 diameter = 6.17;            %define rocket's diameter in inch
-Cd = .5;                   %define rocket's coefficient of drag
+Cd = 10;                   %define rocket's coefficient of drag
 motorName = 'Cesaroni_10367N1800-P.csv';
 
 motor = Motor(motorName, propellersMass);
@@ -31,7 +31,11 @@ macResult = LaunchResult(macRocket);
 clear dryMass propellersMass diameter Cd motorName
 
 display(macRocket)
-macResult.visualize
+% macResult.visualize
+[newMethodVel, transform] = testCalBurnMotor(macRocket);
 
+plot(macResult.time(1, 1:414),newMethodVel, 'c',macResult.time(1, 1:414), transform/max(transform), 'r', macResult.time(1, 1:414), motor.thrust/max(motor.thrust), 'b')
+
+% plot(macResult.time(1, 1:414),macResult.velocity(1,1:414), 'b',macResult.time(1, 1:414), newMethodVel, 'r')
 
 fprintf('\n******************************************\n')
