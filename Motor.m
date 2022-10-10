@@ -5,6 +5,7 @@ classdef Motor
         %Input Data
         motorName;
         propellentMass;
+
         %Important Info
         thrust;
         impulse
@@ -14,6 +15,7 @@ classdef Motor
         burnOutTime;
         totalImpulse;
         specificImpulse;
+        averageThrust;
         
         %Define Global Variables
         samplingFrequency = 60;     %in Hz or num of point in a second
@@ -39,8 +41,10 @@ classdef Motor
             obj.burnOutTime = max(obj.time);
             obj.totalImpulse = round(max(obj.impulse));
             obj.specificImpulse = round(obj.totalImpulse/(obj.propellentMass*2.20462));
+            obj.averageThrust = obj.totalImpulse/obj.burnOutTime;
             obj.massTime = obj.burnMass;
             obj.massFlowRate = obj.calMassFlowRate;
+
 
 
         end

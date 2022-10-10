@@ -16,10 +16,10 @@ fprintf('\n Simulation began...\n')
 % testResult = LaunchResult(testRocket);
 
 %Define Marauder I rocket
-dryMass = 66-12;             %define rocket's dry mass in lb
-propellersMass = 12;
+dryMass = 70.8- 12.625874;  %define rocket's dry mass in lb
+propellersMass = 12.625874;
 diameter = 6.17;            %define rocket's diameter in inch
-Cd = .75;                   %define rocket's coefficient of drag
+Cd = .5;                   %define rocket's coefficient of drag
 motorName = 'Cesaroni_10367N1800-P.csv';
 
 motor = Motor(motorName, propellersMass);

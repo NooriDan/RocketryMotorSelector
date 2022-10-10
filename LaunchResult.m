@@ -98,7 +98,12 @@ classdef LaunchResult
                 obj.time(condition),obj.position(condition),'g', ...
                 obj.time(condition),obj.drag(condition), 'c');
             
-            ylim([-obj.flags(2,2), obj.flags(2,2)])
+            %%marking important apogee data
+            text(obj.flags(2, 1), obj.flags(2,2),'\leftarrow max Velocity point', 'FontName','times');
+            text(obj.flags(1,1),obj.flags(1,2), '\leftarrow max Acceleration Time', 'FontName','times');
+            text(obj.flags(4,1),-obj.flags(4,2), '\leftarrow max Drag', 'FontName','times');
+
+            ylim(1.2*[-obj.flags(1,2), 1.2*obj.flags(2,2)])
             grid on
            
             legend('acceleration', 'velocity','altitude', 'drag','Location','northwest');

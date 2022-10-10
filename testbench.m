@@ -2,11 +2,12 @@ fprintf('\n******************************************')
 fprintf('\n Simulation began...\n')
 
 %Define Global Variables
-dryMass = 50;                   %define rocket's dry mass in lb
-propellersMass = 9;
-diameter = 5.17;            %define rocket's diameter in inch
-Cd = .75;                   %define rocket's coefficient of drag
+dryMass = 63.9341-7.8197964 ;  %define rocket's dry mass in lb
+propellersMass = 7.8197964;
+diameter = 6.17;            %define rocket's diameter in inch
+Cd = .4;                   %define rocket's coefficient of drag
 motorName = 'Cesaroni7388M2045.csv';
+
 
 motor = Motor(motorName, propellersMass);
 airframe = Airframe(dryMass, diameter, Cd);
