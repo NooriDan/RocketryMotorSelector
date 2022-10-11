@@ -7,6 +7,7 @@ classdef Motor
         propellentMass;
 
         %Important Info
+        thrustCurve;
         thrust;
         impulse
         massTime;
@@ -18,7 +19,7 @@ classdef Motor
         averageThrust;
         
         %Define Global Variables
-        samplingFrequency = 60;     %in Hz or num of point in a second
+        samplingFrequency = 50;     %in Hz or num of point in a second
     end
     
     methods
@@ -28,13 +29,13 @@ classdef Motor
 
             obj.motorName = motorName;
 
-            thrustCurve = processMotorData(importdata(motorName).data, ...
-                1/obj.samplingFrequency);
+            obj.thrustCurve = obj.processCSV;
+
             obj.propellentMass = propellerMass/2.20462; % lb to Kg
 
             %Properties for accessability 
-            obj.thrust = thrustCurve(2,:);   %extract the Thrust array
-            obj.time = thrustCurve(1,:);     %extract the time array
+            obj.thrust = obj.thrustCurve.Thrust';                %extract the Thrust array
+            obj.time = seconds(obj.thrustCurve.Time)';               %extract the time array
 
             %Compute Motor Specs
             obj.impulse = integerateMP(obj.time, obj.thrust);
@@ -48,6 +49,19 @@ classdef Motor
 
 
         end
+
+        function [timeTable] = processCSV(obj)
+
+            structData = importdata(obj.motorName);
+
+            table = array2table(structData.data, "VariableNames", {'Time', 'Thrust'});
+            table.Time = seconds(table.Time);
+
+            timeTable = retime(table2timetable(table),'regular', 'makima', ...
+                'SampleRate', obj.samplingFrequency);
+
+        end
+
 
         function massArray = burnMass(obj)
             %burnMass returns a row vector that represents the time
