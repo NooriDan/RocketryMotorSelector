@@ -1,5 +1,5 @@
 Project: RocketryMotorSelector
-##Project Description
+#Project Description
 
 An Object-Oriented program that performs numerical calculation on motor data and rocket specifications to simulate the launch trajectory. The input thrust curve is a .csv file obtained from a static fire test, which is processed to a set sampling frequency using MATLAB built-in interpolation, data filtering and smoothing Tool.
 
